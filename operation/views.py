@@ -186,8 +186,8 @@ class OperationListView(SingleTableView):
     def get_queryset(self):
         qs = super().get_queryset()
         args = self.request.GET
-        if args.get('stock__name__contains', None):
-            qs = qs.filter(stock_name__icontains=args['stock__name__contains'])
+        if args.get('stock', None):
+            qs = qs.filter(stock_name__icontains=args['stock'])
         if args.get('type', None):
             qs = qs.filter(type=args['type'])
         return qs
