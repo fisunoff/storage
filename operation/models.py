@@ -32,7 +32,7 @@ class OperationManager(models.Manager):
             measure=models.F('product__measure_type__name'),
             stock_name=models.Case(
                 models.When(
-                    models.Q(type=ADMISSION) | models.Q(type=DEPARTURE) | models.Q(type=TRANSFER),
+                    models.Q(type=ADMISSION) | models.Q(type=DEPARTURE) | models.Q(type=RECALC),
                     then=Concat(
                         models.F('stock__name'),
                         models.Value(' ('),
@@ -41,12 +41,12 @@ class OperationManager(models.Manager):
                     ),
                 ),
                 default=Concat(
-                    models.F('from_stock'),
+                    models.F('from_stock__name'),
                     models.Value(' ('),
                     models.F('from_stock__address'),
                     models.Value(')'),
-                    models.Value('->'),
-                    models.F('to_stock'),
+                    models.Value('→'),
+                    models.F('to_stock__name'),
                     models.Value(' ('),
                     models.F('to_stock__address'),
                     models.Value(')'),
@@ -71,8 +71,8 @@ class Operation(models.Model):
     type = models.CharField(choices=operations, max_length=1024, verbose_name='Операция')
     product = models.ForeignKey(to='product.Product', on_delete=models.PROTECT, verbose_name='Ресурс')
     quantity = models.FloatField(verbose_name='Количество', null=True, blank=True,)
-    price = models.FloatField(verbose_name='Цена', null=True, blank=True,)
-    cost = models.FloatField(verbose_name='Стоимость', null=True, blank=True,)
+    price = models.FloatField(verbose_name='Цена', null=True, blank=True, default=0)
+    cost = models.FloatField(verbose_name='Стоимость', null=True, blank=True, default=0)
     creator = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, null=True, related_name='operations_by_creator',
                                 verbose_name='Создатель')
     last_editor = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, null=True,
