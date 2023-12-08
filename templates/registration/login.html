@@ -27,10 +27,11 @@
           </table>
 
           <div class="login-sign">
-            <input class="login__btn text-p" type="submit" value="Войти" class="btn btn-primary"/>
+            <input class="login__btn text-p" type="submit" value="Войти"/>
             <input class="login__btn text-p" type="hidden" name="next" value="{{ next }}" />
             <a href="{% url 'reg' %}" class="signup__btn text-p">Зарегистрироваться</a>
-          </div>  
+          </div>
+          </form>
         </div>
         <!-- <div class="login__container"> -->
           <!-- <h1 class="login__title text-h1">Вход</h1>
@@ -45,7 +46,7 @@
               <form action="{% url 'reg' %}"><button class="signup__btn text-p">Зарегестрироваться</button></form> -->
           <!-- </div> -->
       <!-- </div> -->
-        </form>
+
     </div>
 
 
