@@ -1,63 +1,100 @@
-{% include "base.html" with page_title=course.name %}
-
-{% block css %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-              crossorigin="anonymous">
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <style>
-            .container {
-                text-align: -webkit-center;
-            }
-
-            .card {
-                margin: 50px;
-            }
-
-            .btn {
-                margin-left: 8px;
-            }
-
-            .test {
-                display: flex;
-            }
-        </style>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% include "base.html" %}
+{% block custom_css %}
+    <style>
+        .table {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 1px solid #dddddd;
+	border-collapse: collapse;
+    margin-bottom: 40px; 
+}
+.table th {
+    text-align: center;
+	font-weight: bold;
+	padding: 15px;
+	background: #efefef;
+	border: 1px solid var(--grey-color);
+}
+.table td {
+    text-align: center;
+	border: 1px solid var(--grey-color);
+	padding: 15px;
+}
+    </style>
 {% endblock %}
-
 {% block container %}
-    <div class="container mt-4">
+    <!-- <div class="ggg-4">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">{{ type_str }}</h5>
+                <h5 class="card-title text-h1">{{ type_str }}</h5>
             </div>
             <div class="card-body">
                 <dl class="row">
-                    <dt class="col-sm-3">Ресурс</dt>
-                    <dd class="col-sm-9">{{ object.product }}</dd>
-                    <dt class="col-sm-3">Количество</dt>
-                    <dd class="col-sm-9">{{ object.quantity_str }}</dd>
-                    <dt class="col-sm-3">Цена</dt>
-                    <dd class="col-sm-9">{{ object.price }}</dd>
-                    <dt class="col-sm-3">Стоимость</dt>
-                    <dd class="col-sm-9">{{ object.cost }}</dd>
+                    <dt class="col-sm-3 text-h2">Ресурс</dt>
+                    <dd class="col-sm-9 text-p">{{ object.product }}</dd>
+                    <dt class="col-sm-3 text-h2">Количество</dt>
+                    <dd class="col-sm-9 text-p">{{ object.quantity_str }}</dd>
+                    <dt class="col-sm-3 text-h2">Цена</dt>
+                    <dd class="col-sm-9 text-p">{{ object.price }}</dd>
+                    <dt class="col-sm-3 text-h2">Стоимость</dt>
+                    <dd class="col-sm-9 text-p">{{ object.cost }}</dd>
                     {% if from_and_to %}
-                        <dt class="col-sm-3">Исходный склад</dt>
-                        <dd class="col-sm-9">{{ object.from_stock }}</dd>
-                        <dt class="col-sm-3">Новый склад</dt>
-                        <dd class="col-sm-9">{{ object.to_stock }}</dd>
+                        <dt class="col-sm-3 text-h2">Исходный склад</dt>
+                        <dd class="col-sm-9 text-p">{{ object.from_stock }}</dd>
+                        <dt class="col-sm-3 text-h2">Новый склад</dt>
+                        <dd class="col-sm-9 text-p">{{ object.to_stock }}</dd>
                     {% else %}
-                        <dt class="col-sm-3">Cклад</dt>
-                        <dd class="col-sm-9">{{ object.stock }}</dd>
+                        <dt class="col-sm-3 text-h2">Cклад</dt>
+                        <dd class="col-sm-9 text-p">{{ object.stock }}</dd>
                     {% endif %}
-                    <dt class="col-sm-3">Дата операции</dt>
+                    <dt class="col-sm-3 text-h2">Дата операции</dt>
                     <dd class="col-sm-9">{{ object.date }}</dd>
                     {% if can_edit %}
-                        <a href="{% url 'operation-update' object.pk %}" class="btn btn-primary">Редактировать</a>
+                        <a href="{% url 'operation-update' object.pk %}" class="login__btn text-p">Редактировать</a>
                     {% endif %}
                 </dl>
             </div>
         </div>
+    </div> -->
+    
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ресурс</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Стоимость</th>
+                    {% if from_and_to %}
+                        <th>Исходный склад</th>
+                        <th>Новый склад</th>
+                    {% else %}
+                        <th>Cклад</th>
+                    {% endif %}
+                    <th>Дата операции</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ object.product }}</td>
+                    <td>{{ object.quantity_str }}</td>
+                    <td>{{ object.price }}</td>
+                    <td>{{ object.cost }}</td>
+                    {% if from_and_to %}
+                        <td>{{ object.from_stock }}</td>
+                        <td>{{ object.to_stock }}</td>
+                    {% else %}
+                        <td>{{ object.stock }}</td>
+                    {% endif %}
+                    <td>{{ object.date }}</td>
+                </tr>
+            </tbody>
+                    
+        </table>
+                {% if can_edit %}
+                    <a href="{% url 'operation-update' object.pk %}" class="login__btn text-p">Редактировать</a>
+                {% endif %}
     </div>
 
 {% endblock %}
