@@ -5,6 +5,7 @@ from django_tables2 import SingleTableView
 
 from mixins import AddTitleFormMixin, ProDetailView, SaveEditorMixin
 from operation.const import ADMISSION, DEPARTURE, TRANSFER, RECALC
+from operation.filters import OperationFilter
 from operation.models import Operation
 from operation.tables import OperationTable
 
@@ -179,4 +180,14 @@ class OperationListView(SingleTableView):
     def get_context_data(self, **kwargs):
         can_edit = self.request.user.is_authenticated
         kwargs['can_edit'] = can_edit
+        kwargs['filter'] = OperationFilter
         return super().get_context_data(**kwargs)
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        args = self.request.GET
+        if args.get('stock__name__contains', None):
+            qs = qs.filter(stock_name__icontains=args['stock__name__contains'])
+        if args.get('type', None):
+            qs = qs.filter(type=args['type'])
+        return qs

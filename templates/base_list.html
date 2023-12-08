@@ -4,9 +4,16 @@
 {% block container %}
     <div class="container mt-4">
         {% load render_table from django_tables2 %}
-        {% render_table table %}
+        {% if filter %}
+            {% load bootstrap3 %}
+            <form action="" method="get" class="form form-inline">
+                {% bootstrap_form filter.form layout='inline' %}
+                {% bootstrap_button 'Отфильтровать' %}
+            </form>
+        {% endif %}
         {% if can_edit %}
             <a href="{% url 'operation-create' %}" class="login__btn">Создать операцию</a>
         {% endif %}
+        {% render_table table %}
     </div>
 {% endblock %}

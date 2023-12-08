@@ -31,6 +31,7 @@ urlpatterns = [
     path('reg/', SignUp.as_view(), name='reg'),
     path('operation/', include('operation.urls')),
     path('report/', include('report.urls')),
+    path('stock/', include('stock.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

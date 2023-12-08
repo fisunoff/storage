@@ -1,0 +1,36 @@
+{% include "base.html" with page_title='Курсы' %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <style>
+            .container {
+                text-align: -webkit-center;
+            }
+
+            .card {
+                margin: 50px;
+            }
+
+            .btn {
+                margin-left: 8px;
+            }
+
+            .test {
+                display: flex;
+            }
+        </style>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block container %}
+    <div class="container mt-4">
+        {% load render_table from django_tables2 %}
+        {% if can_edit %}
+            <h1>{{ title }}<a href="{% url 'stock-create' %}" class="btn btn-primary btn-lg">Создать</a></h1>
+        {% endif %}
+        {% render_table table %}
+    </div>
+{% endblock %}

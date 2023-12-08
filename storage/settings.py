@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'django_tables2',
     'django_select2',
+    'bootstrap3',
 
     'extended_user',
     'measure',

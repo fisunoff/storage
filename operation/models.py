@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.functions import datetime
+from django.db.models.functions import datetime, Concat
 
 from extended_user.models import Profile
 from operation.const import ADMISSION, DEPARTURE, TRANSFER, RECALC
@@ -30,6 +30,29 @@ class OperationManager(models.Manager):
             output_field=models.CharField(max_length=1024)
             ),
             measure=models.F('product__measure_type__name'),
+            stock_name=models.Case(
+                models.When(
+                    models.Q(type=ADMISSION) | models.Q(type=DEPARTURE) | models.Q(type=TRANSFER),
+                    then=Concat(
+                        models.F('stock__name'),
+                        models.Value(' ('),
+                        models.F('stock__address'),
+                        models.Value(')'),
+                    ),
+                ),
+                default=Concat(
+                    models.F('from_stock'),
+                    models.Value(' ('),
+                    models.F('from_stock__address'),
+                    models.Value(')'),
+                    models.Value('->'),
+                    models.F('to_stock'),
+                    models.Value(' ('),
+                    models.F('to_stock__address'),
+                    models.Value(')'),
+                    output_field=models.CharField(max_length=1024)
+                )
+            )
         )
         return qs
 
