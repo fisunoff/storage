@@ -1,4 +1,4 @@
-{% include "base.html" with page_title=profile %}
+{% include "base.html" with page_title='Курсы' %}
 
 {% block css %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -27,17 +27,10 @@
 
 {% block container %}
     <div class="container mt-4">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Редактирование пользователя</h5>
-            </div>
-            <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-success">Изменить</button>
-                </form>
-            </div>
-        </div>
+        {% load render_table from django_tables2 %}
+        {% if can_edit %}
+            <h1>{{ title }}<a href="{% url 'report-create' %}" class="btn btn-primary btn-lg">Создать</a></h1>
+        {% endif %}
+        {% render_table table %}
     </div>
 {% endblock %}

@@ -58,7 +58,7 @@ class OperationDetailView(ProDetailView):
 class ReportListView(SingleTableView):
 
     model = Report
-    template_name = 'base_list.html'
+    template_name = 'report/list.html'
     table_class = ReportTable
 
     def get_context_data(self, **kwargs):
