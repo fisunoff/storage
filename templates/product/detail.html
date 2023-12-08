@@ -1,30 +1,8 @@
 {% include "base.html" %}
-{% block custom_css %}
-    <style>
-        .table {
-	width: 100%;
-	margin-bottom: 20px;
-	border: 1px solid #dddddd;
-	border-collapse: collapse;
-    margin-bottom: 40px; 
-}
-.table th {
-    text-align: center;
-	font-weight: bold;
-	padding: 15px;
-	background: #efefef;
-	border: 1px solid var(--grey-color);
-}
-.table td {
-    text-align: center;
-	border: 1px solid var(--grey-color);
-	padding: 15px;
-}
-    </style>
-{% endblock %}
+
 {% block container %}
-    <div class="container">
-        <table class="table">
+    <div class="container stock__container">
+        <table class="table stock__table">
             <thead>
                 <tr>
                     <th>Название</th>
@@ -40,12 +18,14 @@
             </tbody>
                     
         </table>
-                {% if can_edit %}
-                    <a href="{% url 'product-update' object.pk %}" class="login__btn text-p">Редактировать</a>
-                {% endif %}
+        
+        {% if can_edit %}
+            <a href="{% url 'product-update' object.pk %}" class="login__btn stock__btn text-p">Редактировать</a>
+        {% endif %}
 
+        {% load render_table from django_tables2 %}
+        {% render_table table %}
     </div>
-    {% load render_table from django_tables2 %}
-    {% render_table table %}
+    
 
 {% endblock %}
