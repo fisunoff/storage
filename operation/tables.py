@@ -22,6 +22,7 @@ class SmallOperationTable(OperationTable):
         model = Operation
         template_name = "django_tables2/bootstrap.html"
         fields = ('details', 'type_str', 'product', 'quantity', 'measure', 'date', )
+        exclude = ('stock_name',)
 
 
 class OperationByProductTable(OperationTable):
@@ -29,3 +30,4 @@ class OperationByProductTable(OperationTable):
         model = Operation
         template_name = "django_tables2/bootstrap.html"
         fields = ('details', 'stock_name', 'type_str', 'quantity', 'measure', 'date')
+        exclude = ('product', )
