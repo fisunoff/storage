@@ -22,8 +22,8 @@ class Report(models.Model):
 
     creator = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, null=True, related_name='reports_by_creator',
                                 verbose_name='Создатель')
-    start_date = models.DateField(verbose_name='С')
-    end_date = models.DateField(verbose_name='По')
+    start_date = models.DateField(verbose_name='От')
+    end_date = models.DateField(verbose_name='До')
     status = models.CharField(max_length=1024, verbose_name='Статус', choices=statuses, default='in_progress')
     file = models.FileField(verbose_name='Файл')
 
