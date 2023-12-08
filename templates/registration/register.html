@@ -41,8 +41,8 @@
             <h1 class="login__title text-h1">Регистрация</h1>
             <div class="form-recovery">
                 <input class="login-form text-p" type="text" name="username" id="{{ form.username.auto_id }}" placeholder="Логин">
-                <input class="login-form text-p" type="text" name="password1" id="{{ form.password1.auto_id }}" placeholder="Пароль">
-                <input class="login-form text-p" type="text" name="password2" id="{{ form.password2.auto_id }}" placeholder="Повторите пароль">
+                <input class="login-form text-p" type="password" name="password1" id="{{ form.password1.auto_id }}" placeholder="Пароль">
+                <input class="login-form text-p" type="password" name="password2" id="{{ form.password2.auto_id }}" placeholder="Повторите пароль">
                 <a class="recovery__btn text-p" href="{% url 'login' %}">Есть аккаунт?</a>
             </div>
     
