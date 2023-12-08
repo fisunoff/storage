@@ -1,7 +1,7 @@
 {% include "base.html" %}
 {% block container %}
-    <div class="container">
-        <table class="table">
+    <div class="container stock__container">
+        <table class="table stock__table">
             <thead>
                 <tr>
                     <th>Название</th>
@@ -16,15 +16,15 @@
                 </tr>
             </tbody>
                     
-        </table>
-
+        </table>  
+        
+        {% if can_edit %}
+            <a href="{% url 'stock-update' object.pk %}" class="login__btn stock__btn text-p">Редактировать</a>
+        {% endif %}
+        
         {% load render_table from django_tables2 %}
         {% render_table table %}
-
-            {% if can_edit %}
-                <a href="{% url 'stock-update' object.pk %}" class="login__btn text-p">Редактировать</a>
-            {% endif %}
-                
+   
     </div>
     
 

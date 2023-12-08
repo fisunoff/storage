@@ -70,9 +70,12 @@
             </tbody>
                     
         </table>
+        
+        <div class="stock__item">   
                 {% if can_edit %}
                     <a href="{% url 'operation-update' object.pk %}" class="login__btn text-p">Редактировать</a>
-                {% endif %}
+                 {% endif %}
+        </div>     
     </div>
 
 {% endblock %}
