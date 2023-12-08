@@ -23,3 +23,9 @@ class SmallOperationTable(OperationTable):
         template_name = "django_tables2/bootstrap.html"
         fields = ('details', 'type_str', 'product', 'quantity', 'measure', 'date', )
 
+
+class OperationByProductTable(OperationTable):
+    class Meta:
+        model = Operation
+        template_name = "django_tables2/bootstrap.html"
+        fields = ('details', 'stock_name', 'type_str', 'quantity', 'measure', 'date')
