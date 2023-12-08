@@ -28,8 +28,7 @@ class ReportCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin, C
         return initial_data
 
     def get_success_url(self):
-        return reverse_lazy('report-create')
-        # return reverse_lazy('report-detail', kwargs={'pk': self.object.id})
+        return reverse_lazy('report-list')
 
     def form_valid(self, form):
         self.object = form.save()
@@ -41,22 +40,6 @@ class ReportCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin, C
         self.object.save()
         make_report.send(self.object.pk)
         return self.form_invalid(form)
-
-"""
-class OperationDetailView(ProDetailView):
-    model = Operation
-    template_name = 'operation/detail.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs = super().get_context_data(**kwargs)
-        can_edit = False
-        if self.request.user.is_authenticated:
-            can_edit = self.request.user.profile.pk == self.object.creator or self.request.user.is_superuser
-        kwargs['type_name'] = Operation.operations_dict[self.object.type]
-        kwargs['can_edit'] = can_edit
-        kwargs['from_and_to'] = (self.object.type == TRANSFER)
-        return kwargs
-"""
 
 
 class ReportListView(SingleTableView):

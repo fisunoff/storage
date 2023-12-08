@@ -11,6 +11,7 @@ class ReportManager(models.Manager):
         qs = super().get_queryset()
         return qs
 
+
 class Report(models.Model):
     statuses = (
         ('in_progress', 'Генерация'),

@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 from docx.shared import Mm, Cm
@@ -5,7 +7,14 @@ from docx.shared import Pt
 from docx.enum.section import WD_ORIENT
 
 
-def generate_report(count_of_row, count_of_col, col_names, data, doc_info):
+@dataclass
+class TableReport:
+    col_names: list | tuple
+    data: list | tuple
+    report_name: str
+
+
+def generate_report(tables: list[TableReport], doc_info):
     # создание документа
     doc = Document()
     # доступ к первой секции:
@@ -31,50 +40,34 @@ def generate_report(count_of_row, count_of_col, col_names, data, doc_info):
     for run in title.runs:
         run.font.size = Pt(15)
 
-    empty_space = doc.add_paragraph(" ")
+    for table in tables:
+        doc.add_paragraph(" ")
+        doc.add_heading(table.report_name, level=2)
+        # создание таблицы
+        table_total = doc.add_table(rows=len(table.data) + 1, cols=len(table.col_names))
+        table_total.style = 'Light Shading Accent 1'
 
-    # создание таблицы
-    table = doc.add_table(rows=count_of_row+1, cols=count_of_col)
-    table.style = 'Light Shading Accent 1'
+        #заполнение названий столбцов
+        for i in range(len(table.col_names)):
+            cell = table_total.cell(0, i)
+            cell.paragraphs[0].add_run(table.col_names[i]).bold = True
 
-    #заполнение названий столбцов
-    for i in range(count_of_col):
-        cell = table.cell(0, i)
-        cell.paragraphs[0].add_run(col_names[i]).bold = True
+        sum_of_types = {}
+        # заполнение данными
+        num_of_row = 1
 
-    sum_of_types = {}
-    # заполнение данными
-    num_of_row = 1
-
-    for elem in data:
-        num_of_col = 0
-        for key, value in elem.items():
-            cell = table.cell(num_of_row, num_of_col)
-            cell.text = str(value)
-            num_of_col += 1
-        num_of_row += 1
-
-    sum_of_types = {}
-
-    for elem in data:
-        if elem["type_of_operation"] in sum_of_types:
-            sum_of_types[elem["type_of_operation"]] += elem['sum']
-        else:
-            sum_of_types[elem["type_of_operation"]] = elem['sum']
-
-    empty_space = doc.add_paragraph(" ")
-
-
-    for key, value in sum_of_types.items():
-        paragraph = doc.add_paragraph()
-        run = paragraph.add_run(f"Итоги {key}: {value}")
-        font = run.font
-        font.size = Pt(15)
+        for elem in table.data:
+            num_of_col = 0
+            for key, value in elem.items():
+                cell = table_total.cell(num_of_row, num_of_col)
+                cell.text = str(value)
+                num_of_col += 1
+            num_of_row += 1
 
     empty_space = doc.add_paragraph(" ")
 
     paragraph = doc.add_paragraph()
-    run = paragraph.add_run(f"Утверждаю    {doc_info['signature']}")
+    run = paragraph.add_run(f"Подготовил    {doc_info['signature']}")
     font = run.font
     font.size = Pt(15)
     filename = "report.docx"
