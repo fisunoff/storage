@@ -8,6 +8,7 @@ from operation.const import ADMISSION, DEPARTURE, TRANSFER, RECALC
 class OperationManager(models.Manager):
     def get_queryset(self):
         qs = super().get_queryset()
+        qs = qs.select_related('product').select_related('product__measure_type')
         qs = qs.annotate(type_str=models.Case(
             models.When(
                 models.Q(type=ADMISSION),
@@ -27,7 +28,8 @@ class OperationManager(models.Manager):
             ),
             default=models.Value('Не определено'),
             output_field=models.CharField(max_length=1024)
-            )
+            ),
+            measure=models.F('product__measure_type__name'),
         )
         return qs
 

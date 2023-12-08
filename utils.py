@@ -55,17 +55,12 @@ def generate_report(count_of_row, count_of_col, col_names, data, doc_info):
         num_of_row += 1
 
     sum_of_types = {}
-    type_op = ''
-    sum_op = 0
+
     for elem in data:
-        if elem["type_of_operation"] == type_op:
-            sum_op += elem["sum"]
+        if elem["type_of_operation"] in sum_of_types:
+            sum_of_types[elem["type_of_operation"]] += elem['sum']
         else:
-            if sum_op != 0:
-                sum_of_types[type_op] = sum_op
-            type_op = elem["type_of_operation"]
-            sum_op = 0
-    sum_of_types[type_op] = sum_op
+            sum_of_types[elem["type_of_operation"]] = elem['sum']
 
     empty_space = doc.add_paragraph(" ")
 
@@ -82,8 +77,9 @@ def generate_report(count_of_row, count_of_col, col_names, data, doc_info):
     run = paragraph.add_run(f"Утверждаю    {doc_info['signature']}")
     font = run.font
     font.size = Pt(15)
-
-    doc.save("report.docx")
+    filename = "report.docx"
+    doc.save(filename)
+    return filename
 
 
 names_of_col = ["Продукт", "Тип операции", "Дата", "Склад", "Количество", "Единица измерения", "Цена за единицу", "Сумма"]
@@ -145,5 +141,5 @@ doc_info = {"start_data": '12.12.2021',
             "end_data": '12.12.2022',
             "signature": "Иванов"}
 
-generate_report(len(data_tuple), len(names_of_col), names_of_col, data_tuple, doc_info)
-
+if __name__ == '__main__':
+    generate_report(len(data_tuple), len(names_of_col), names_of_col, data_tuple, doc_info)

@@ -8,8 +8,9 @@ class OperationTable(tables.Table):
                                     orderable=False, verbose_name="")
 
     type_str = tables.Column(orderable=True, verbose_name="Тип")
+    measure = tables.Column(orderable=True, verbose_name="Единица измерения")
 
     class Meta:
         model = Operation
         template_name = "django_tables2/bootstrap.html"
-        fields = ('details', 'type_str', 'product', )
+        fields = ('details', 'type_str', 'product', 'quantity', 'measure', 'date', )

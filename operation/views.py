@@ -1,11 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from django_tables2 import SingleTableView
 
-from mixins import AddTitleFormMixin, DetailWithSingleTable, ProDetailView, SaveEditorMixin
-from extended_user.models import Profile
+from mixins import AddTitleFormMixin, ProDetailView, SaveEditorMixin
 from operation.const import ADMISSION, DEPARTURE, TRANSFER, RECALC
 from operation.models import Operation
 from operation.tables import OperationTable

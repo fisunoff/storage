@@ -30,6 +30,7 @@ urlpatterns = [
     path('accounts/profile/', ProfileDetailView.as_view(), name='self-profile-detail'),
     path('reg/', SignUp.as_view(), name='reg'),
     path('operation/', include('operation.urls')),
+    path('report/', include('report.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
               + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
