@@ -1,4 +1,7 @@
+from io import BytesIO
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django_tables2 import SingleTableView
@@ -8,6 +11,7 @@ from mixins import AddTitleFormMixin, SaveEditorMixin
 from report.models import Report
 from report.tables import ReportTable
 from report.worker import make_report
+from docx import Document
 
 
 class ReportCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin, CreateView):
@@ -65,3 +69,33 @@ class ReportListView(SingleTableView):
         can_edit = self.request.user.is_authenticated
         kwargs['can_edit'] = can_edit
         return super().get_context_data(**kwargs)
+
+
+def download_report(request):
+    report_id = request.GET.get('id')
+    try:
+        report = Report.objects.get(id=report_id)
+    except Report.DoesNotExist:
+        return HttpResponse("Отчет не найден", status=404)
+
+    doc = Document()
+    doc.add_heading('Отчет', 0)
+    doc.add_paragraph(f'Создатель: {report.creator}')
+    doc.add_paragraph(f'Период: С {report.start_date} по {report.end_date}')
+    doc.add_paragraph(f'Статус: {report.get_status_display()}')
+
+    f = BytesIO()
+    doc.save(f)
+    length = f.tell()
+    f.seek(0)
+
+    response = HttpResponse(
+        f.getvalue(),
+        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    )
+    # response['Content-Disposition'] = f'attachment; filename="Отчет_{report.start_date}_{report.end_date}.docx"'
+    response['Content-Disposition'] = f'attachment; filename="report_{report.start_date}_{report.end_date}.docx"'
+
+    response['Content-Length'] = length
+
+    return response
