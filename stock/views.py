@@ -78,5 +78,5 @@ class StockListView(SingleTableView):
     def get_context_data(self, **kwargs):
         can_edit = self.request.user.is_authenticated
         kwargs['can_edit'] = can_edit
-        kwargs['filter'] = OperationFilter
+        # kwargs['filter'] = OperationFilter
         return super().get_context_data(**kwargs)

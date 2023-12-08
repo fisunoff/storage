@@ -6,7 +6,7 @@ from operation.models import Operation
 class OperationFilter(FilterSet):
     class Meta:
         model = Operation
-        fields = {"stock__name": ["contains"], "type": ["exact"]}
+        fields = ("stock", "type")
 
 
 class SmallOperationFilter(FilterSet):
