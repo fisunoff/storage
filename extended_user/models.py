@@ -14,7 +14,7 @@ class Profile(models.Model):
     patronymic = models.CharField("Отчество", max_length=50, blank=True, null=True)
     bio = models.TextField("Описание профиля", max_length=500, blank=True, null=True)
     post = models.CharField(verbose_name="Должность", max_length=200, blank=True, null=True)
-    communication = models.CharField(verbose_name="Связь", max_length=200, blank=True, null=True)
+    communication = models.CharField(verbose_name="Контакты", max_length=200, blank=True, null=True)
     time_create = models.DateTimeField(verbose_name="Дата создания учетной записи", default=timezone.now)
     photo = models.ImageField(verbose_name="Фото профиля", blank=True, null=True)
 
