@@ -14,24 +14,37 @@
             <p>Пожалуйста, войдите в свой аккаунт.</p>
           {% endif %}
         {% endif %}
+        <div class="login__container">  
+          <h1 class="login__title text-h1">Вход</h1>  
+          <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <table class="table table-hover">
+            <div class="form-recovery">
+                <input class="login-form text-p" name="username" id="{{ form.username.auto_id }}" type="text" placeholder="Логин">
+                <input class="login-form text-p" name="password" id="{{ form.password.auto_id }}" type="password" placeholder="Пароль">
+                <a class="recovery__btn text-p" href="#">Забыли пароль?</a>
+            </div>
+          </table>
 
-        <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <table class="table table-hover">
-
-        <tr>
-          <td>{{ form.username.label_tag }}</td>
-          <td>{{ form.username }}</td>
-        </tr>
-
-        <tr>
-          <td>{{ form.password.label_tag }}</td>
-          <td>{{ form.password }}</td>
-        </tr>
-        </table>
-
-        <input type="submit" value="Войти" class="btn btn-primary"/>
-        <input type="hidden" name="next" value="{{ next }}" />
+          <div class="login-sign">
+            <input class="login__btn text-p" type="submit" value="Войти" class="btn btn-primary"/>
+            <input class="login__btn text-p" type="hidden" name="next" value="{{ next }}" />
+            <a href="{% url 'reg' %}" class="signup__btn text-p">Зарегистрироваться</a>
+          </div>  
+        </div>
+        <!-- <div class="login__container"> -->
+          <!-- <h1 class="login__title text-h1">Вход</h1>
+          <div class="form-recovery">
+              <input class="login-form text-p" id="{form.username.auto_id}" type="text" placeholder="Логин">
+              <input class="login-form text-p" id="{form.password.auto_id}" type="text" placeholder="Пароль">
+              <a class="recovery__btn text-p" href="#">Забыли пароль?</a>
+          </div> -->
+  
+          <!-- <div class="login-sign"> -->
+              <!-- <form type="submit"><button class="login__btn text-p">Войти</button></form>
+              <form action="{% url 'reg' %}"><button class="signup__btn text-p">Зарегестрироваться</button></form> -->
+          <!-- </div> -->
+      <!-- </div> -->
         </form>
     </div>
 
