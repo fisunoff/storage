@@ -11,9 +11,10 @@
                 {% bootstrap_button 'Отфильтровать' %}
             </form>
         {% endif %}
+        
+        {% render_table table %}
         {% if can_edit %}
             <a href="{% url 'operation-create' %}" class="login__btn">Создать операцию</a>
         {% endif %}
-        {% render_table table %}
     </div>
 {% endblock %}
