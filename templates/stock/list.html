@@ -2,12 +2,12 @@
 
 
 {% block container %}
-    <div class="container mt-4">
+    <div class="container stock__container">
         {% load render_table from django_tables2 %}
         
         {% render_table table %}
         {% if can_edit %}
-            <a href="{% url 'stock-create' %}" class="login__btn">Создать</a>
+            <a href="{% url 'stock-create' %}" class="login__btn stock__btn">Создать</a>
         {% endif %}
     </div>
 {% endblock %}
