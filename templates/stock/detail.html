@@ -21,10 +21,12 @@
         {% if can_edit %}
             <a href="{% url 'stock-update' object.pk %}" class="login__btn stock__btn text-p">Редактировать</a>
         {% endif %}
-        
-        {% load render_table from django_tables2 %}
-        {% render_table table %}
-   
+        <div class="table-hidden" id="tableHide" style="display: none;">
+            {% load render_table from django_tables2 %}
+            {% render_table table %}
+        </div>
+            
+        <button onclick="ShowTable()" class="login__btn show__btn show__btn-abs text-p" id="showMoreButton">Показать таблицу</button>
     </div>
     
 

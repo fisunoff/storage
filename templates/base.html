@@ -51,6 +51,27 @@
         width: 20%;
         text-align: center;
     }
+    .show__btn {
+        width: 20%;
+        margin: 0 auto;
+    }
+    .show__btn-abs {
+        position: absolute;
+        top: 36.5%;
+        left: 40%;
+        width: 20%;
+        margin: 0 auto;
+    }
+
+    /* .table:nth-child(n+6) {
+        display: none;
+    }  */
+    /* #showMoreButton {
+        display: none;
+    } */
+    /* #showMoreButton.show {
+        display: block;
+    } */
     
     </style>
     {% endblock %}
@@ -69,7 +90,6 @@
                     </svg>
 
                 <ul class="header-link__items" id="slide-out">
-                    <li><a class="header-link text-h2" href="#">Главная</a></li>
                     <li><a class="header-link text-h2" href="{% url 'self-profile-detail' %}">Профиль</a></li>
                     <li><a class="header-link text-h2" href="{% url 'operation-list' %}">Операции</a></li>
                     <li><a class="header-link text-h2" href="{% url 'stock-list' %}">Склады</a></li>
@@ -103,6 +123,23 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript"
         src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+   function ShowTable() {
+  var tableHide = document.getElementById("tableHide");
+  var showMoreButton = document.getElementById("showMoreButton");
+  var hideTableButton = document.createElement("button");
+  hideTableButton.textContent = "Свернуть таблицу";
+  hideTableButton.classList.add("login__btn", "show__btn", "text-p");
+  hideTableButton.addEventListener("click", function() {
+    tableHide.style.display = "none";
+    showMoreButton.style.display = "block";
+    hideTableButton.remove();
+  });
+  tableHide.style.display = "table";
+  showMoreButton.style.display = "none";
+  showMoreButton.insertAdjacentElement("afterend", hideTableButton);
+}
 </script>
 
 {% block custom_js %}
