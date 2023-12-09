@@ -22,7 +22,31 @@
         {% if can_edit %}
             <a href="{% url 'product-update' object.pk %}" class="login__btn stock__btn text-p">Редактировать</a>
         {% endif %}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <canvas id="pie-chart" width="400" height="400"></canvas>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('pie-chart').getContext('2d');
+                var resource_percentages = {{ diagram_data }};
+                var storage_labels = {{ diagram_labels|safe }};
+
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: storage_labels,
+                        datasets: [{
+                            data: resource_percentages,
+                            backgroundColor: {{ colors|safe }}
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false
+                    }
+                });
+            });
+        </script>
         {% load render_table from django_tables2 %}
         {% render_table table %}
     </div>
