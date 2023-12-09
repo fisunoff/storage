@@ -195,7 +195,7 @@ ul#slide-out:not(.browser-default) > li {
 .profile__btns {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 30%;
 }
 .profile__btn {
     order: 1;

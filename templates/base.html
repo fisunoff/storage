@@ -63,15 +63,24 @@
         margin: 0 auto;
     }
 
-    /* .table:nth-child(n+6) {
-        display: none;
-    }  */
-    /* #showMoreButton {
-        display: none;
-    } */
-    /* #showMoreButton.show {
+    .profile__btns {
+    display: flex;
+    justify-content: space-between;
+    width: 83%;
+    }
+    .logout__form {
+        width: 100%;
+    }
+    .logout__items {
         display: block;
-    } */
+        margin: 0 auto;
+        text-align: center;
+    }
+    .logout__title {
+        text-align: center;
+        margin-bottom: 70px;
+    }
+    
     
     </style>
     {% endblock %}
@@ -94,7 +103,6 @@
                     <li><a class="header-link text-h2" href="{% url 'operation-list' %}">Операции</a></li>
                     <li><a class="header-link text-h2" href="{% url 'stock-list' %}">Склады</a></li>
                     <li><a class="header-link text-h2" href="{% url 'product-list' %}">Ресурсы</a></li>
-                    <li><a class="header-link text-h2" href="{% url 'report-list' %}">Статистика</a></li>
                 </ul>
 
                 <a class="burger sidenav-trigger" data-target="slide-out">

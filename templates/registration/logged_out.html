@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block container %}
-    <p>Выполнен выход!</p>
+    <div class="container">
+        <div class="logout__items">
+            <h1 class="logout__title text-h1">Выполнен выход!</h1>
 
-    <a href="{% url 'login' %}">Войти снова.</a>
+            <a class="login__btn" href="{% url 'login' %}">Войти снова</a>
+        </div>
+    </div>
 {% endblock %}
