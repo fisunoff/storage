@@ -8,6 +8,7 @@ from operation.const import ADMISSION, DEPARTURE, TRANSFER, RECALC
 from operation.filters import OperationFilter
 from operation.models import Operation
 from operation.tables import OperationTable
+from stock.models import Stock
 
 
 class OperationCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin, CreateView):
@@ -188,13 +189,18 @@ class OperationListView(SingleTableView):
         can_edit = self.request.user.is_authenticated
         kwargs['can_edit'] = can_edit
         kwargs['filter'] = OperationFilter
+        args = self.request.GET
+        if args.get('stock', None):
+            selected_stock = args.get('stock', None)
+            kwargs['selected_stock'] = int(selected_stock)
+        kwargs['filter_stock_data'] = Stock.objects.values_list('pk', 'name')
         return super().get_context_data(**kwargs)
 
     def get_queryset(self):
         qs = super().get_queryset()
         args = self.request.GET
         if args.get('stock', None):
-            qs = qs.filter(stock_name__icontains=args['stock'])
+            qs = qs.filter(stock=args['stock'])
         if args.get('type', None):
             qs = qs.filter(type=args['type'])
         return qs

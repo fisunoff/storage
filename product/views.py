@@ -14,7 +14,6 @@ from product.models import Product
 from product.tables import ProductTable
 
 
-
 class ProductCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin, CreateView):
     model = Product
     template_name = 'base_create.html'
