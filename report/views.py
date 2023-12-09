@@ -1,7 +1,7 @@
 from io import BytesIO
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -39,7 +39,7 @@ class ReportCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin, C
             self.object.creator = user_profile
         self.object.save()
         make_report.send(self.object.pk)
-        return self.form_invalid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class ReportListView(SingleTableView):
