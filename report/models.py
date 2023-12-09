@@ -26,6 +26,7 @@ class Report(models.Model):
     start_date = models.DateField(verbose_name='От')
     end_date = models.DateField(verbose_name='До')
     status = models.CharField(max_length=1024, verbose_name='Статус', choices=statuses, default='in_progress')
+    time_generated = models.DateTimeField(null=True, blank=True, verbose_name='Время генерации')
     file = models.FileField(verbose_name='Файл')
 
     class Meta:
