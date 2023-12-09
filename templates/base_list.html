@@ -45,10 +45,12 @@
                 <select class="filter__select text-p" name="stock" title id="id_stock">
                     <option value="">(Не выбрано)</option>
                     {% for elem in filter_stock_data %}
-                        <option value="{{ elem.0 }}">{{ elem.1 }}
-                        {% if elem.0 == selected_stock %}
-                            selected=""
-                        {% endif %}
+                        <option value="{{ elem.0 }}"
+                            {% if elem.0 == selected_stock %}
+                                selected=""
+                            {% endif %}
+                            >
+                            {{ elem.1 }}
                         </option>
                     {% endfor %}
                 </select>
