@@ -18,6 +18,9 @@ class OperationTable(tables.Table):
 
 
 class SmallOperationTable(OperationTable):
+    product = tables.TemplateColumn('<a href="{% url \'product-detail\' record.product.id %}">{{ record.product }}</a>',
+                                    orderable=True, verbose_name="Ресурс")
+
     class Meta:
         model = Operation
         template_name = "django_tables2/bootstrap.html"
