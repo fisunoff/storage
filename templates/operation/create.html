@@ -1,0 +1,54 @@
+{% extends "base_create.html" %}
+
+{% block container %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">gege</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" class="btn btn-success">
+                        {% if editing %}
+                            Сохранить
+                        {% else %}
+                            Создать
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        let selectElement = document.getElementById('id_type');
+        let selectedValue = selectElement.options[selectElement.selectedIndex].value;
+        $('#id_from_stock').parent().hide();
+        $('#id_to_stock').parent().hide();
+        $('#id_stock').parent().hide();
+        $('#id_type').change(function () {
+                selectedValue = selectElement.options[selectElement.selectedIndex].value;
+                console.log(selectedValue);
+                if (selectedValue == '') {
+                    $('#id_from_stock').parent().hide();
+                    $('#id_to_stock').parent().hide();
+                    $('#id_stock').parent().hide();
+                  }
+                else {
+                    if (selectedValue == 'transfer') {
+                        $('#id_from_stock').parent().show();
+                        $('#id_to_stock').parent().show();
+                        $('#id_stock').parent().hide();
+                    }
+                    else {
+                        $('#id_from_stock').parent().hide();
+                        $('#id_to_stock').parent().hide();
+                        $('#id_stock').parent().show();
+                    }
+                }
+            }
+        )
+
+    </script>
+{% endblock %}

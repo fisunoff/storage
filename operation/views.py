@@ -12,7 +12,7 @@ from operation.tables import OperationTable
 
 class OperationCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin, CreateView):
     model = Operation
-    template_name = 'base_create.html'
+    template_name = 'operation/create.html'
 
     fields = ('type', 'product', 'quantity', 'price', 'cost', 'from_stock', 'to_stock', 'stock', 'date')
     title = "Добавление операции"
@@ -52,7 +52,10 @@ class OperationCreateView(LoginRequiredMixin, SaveEditorMixin, AddTitleFormMixin
                 form.add_error('price',
                                'Должны быть заполнены поля Исходный склад и Новый склад')
                 return self.form_invalid(form)
-
+            if quantity is not None:
+                form.instance.price = form.instance.price or 0
+                form.instance.cost = form.instance.cost or form.instance.price / quantity or 0
+                return super().form_valid(form)
 
         if price is None:
             if cost is None or quantity is None:
@@ -103,7 +106,7 @@ class OperationDetailView(ProDetailView):
 
 class OperationUpdateView(SaveEditorMixin, LoginRequiredMixin, AddTitleFormMixin, UpdateView):
     model = Operation
-    template_name = 'base_create.html'
+    template_name = 'operation/create.html'
 
     fields = ('type', 'product', 'quantity', 'price', 'cost', 'from_stock', 'to_stock', 'stock', 'date')
     title = "Редактирование операции"
@@ -138,6 +141,10 @@ class OperationUpdateView(SaveEditorMixin, LoginRequiredMixin, AddTitleFormMixin
                 form.add_error('price',
                                'Должны быть заполнены поля Исходный склад и Новый склад')
                 return self.form_invalid(form)
+            if quantity is not None:
+                form.instance.price = form.instance.price or 0
+                form.instance.cost = form.instance.cost or form.instance.price / quantity or 0
+                return super().form_valid(form)
 
         if price is None:
             if cost is None or quantity is None:
