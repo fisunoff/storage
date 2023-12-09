@@ -27,6 +27,31 @@
             {% render_table table %}
         </div>
         <button onclick="ShowTable()" class="login__btn show__btn show__btn-abs text-p" id="showMoreButton">Показать таблицу</button>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <canvas id="pie-chart" width="400" height="400"></canvas>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('pie-chart').getContext('2d');
+                var resource_percentages = {{ diagram_data }};
+                var storage_labels = {{ diagram_labels|safe }};
+
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: storage_labels,
+                        datasets: [{
+                            data: resource_percentages,
+                            backgroundColor: {{ colors|safe }}
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false
+                    }
+                });
+            });
+        </script>
     </div>
     
 

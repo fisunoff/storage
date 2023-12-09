@@ -53,6 +53,11 @@ class ReportListView(SingleTableView):
         kwargs['can_edit'] = can_edit
         return super().get_context_data(**kwargs)
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.order_by('-id')
+        return qs
+
 
 def download_report(request, pk):
     report = get_object_or_404(Report, pk=pk)

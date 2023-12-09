@@ -73,11 +73,15 @@
             {% endif %}
             {% if profile.id == user.profile.id %}
             <a href="{% url 'password_change' %}" class="profile__btn text-p">Смена пароля</a>
-            <a href="{% url 'logout' %}" class="profile__btn text-p">Выйти</a>
+{#            <a href="{% url 'logout' %}" class="profile__btn text-p">Выйти</a>#}
+            <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+                <button type="submit" class="profile__btn text-p">Выйти</button>
+            </form>
             {% endif %}
           </div>
       </div>
-      
+
     </div>
 
 {% endblock %}

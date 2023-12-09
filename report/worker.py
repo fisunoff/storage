@@ -4,6 +4,7 @@ import os
 import dramatiq
 from django.core.files import File
 from django.db.models import Q
+from django.utils.timezone import now
 
 from utils import generate_report, TableReport
 
@@ -47,7 +48,7 @@ def make_report(pk):
             "type": str(obj.product),
             "type_of_operation": obj.type_str,
             "date": obj.date,
-            "stock": obj.stock,
+            "stock": obj.stock_name,
             "count": obj.quantity,
             "unit": obj.measure,
             "price": obj.price,
@@ -97,7 +98,7 @@ def make_report(pk):
         elem = {
             "type": str(obj.product),
             "date": obj.date,
-            "stock": obj.stock,
+            "stock": obj.stock_name,
             "count": obj.quantity,
             "unit": obj.measure,
             "price": obj.price,
@@ -125,7 +126,7 @@ def make_report(pk):
         elem = {
             "type": str(obj.product),
             "date": obj.date,
-            "stock": obj.stock,
+            "stock": obj.stock_name,
             "count": obj.quantity,
             "unit": obj.measure,
             "price": obj.price,
@@ -149,4 +150,5 @@ def make_report(pk):
     report.file = File(open(filename, 'rb'))
     report.file.filename = f'Отчет с {report.start_date} по {report.end_date}'
     report.status = 'OK'
+    report.time_generated = now()
     report.save()

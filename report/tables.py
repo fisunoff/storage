@@ -12,7 +12,7 @@ class ReportTable(tables.Table):
     class Meta:
         model = Report
         template_name = "django_tables2/bootstrap.html"
-        fields = ('download', 'start_date', 'end_date', 'status')
+        fields = ('download', 'start_date', 'end_date', 'status', 'time_generated')
 
     def render_download(self, record):
         if record.file and record.status == 'OK':
